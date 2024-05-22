@@ -26,4 +26,9 @@ public class ImovelService {
         return imovelList;
     }
 
+    @Cacheable(value = "imoveis", key = "#imovelId")
+    public Imovel findById(Long imovelId) {
+        return imovelRepository.findById(imovelId)
+                .orElseThrow(() -> new NotFoundException("Imóvel não encontrado"));
+    }
 }
