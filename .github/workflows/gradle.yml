@@ -20,6 +20,21 @@ jobs:
     permissions:
       contents: read
 
+    services:
+      postgres-server:
+        image: postgres:12
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: myuser
+          POSTGRES_PASSWORD: mypassword
+          POSTGRES_DB: spring_redis_db
+
+      redis-server:
+        image: redis
+        ports:
+          - 6379:6379
+
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 17
