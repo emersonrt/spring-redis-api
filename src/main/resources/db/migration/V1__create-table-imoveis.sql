@@ -1,0 +1,6 @@
+CREATE TABLE imovel (
+    id SERIAL PRIMARY KEY,
+    endereco VARCHAR(255) NOT NULL,
+    preco NUMERIC(10, 2) NOT NULL,
+    area NUMERIC(10, 2) NOT NULL
+);
