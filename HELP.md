@@ -25,11 +25,10 @@ These additional references should also help you:
 
 * [Gradle Build Scans – insights for your project's build](https://scans.gradle.com#gradle)
 
-commands: 
-docker build -t spring_redis_db .
+### Docker commands
+docker-compose up -d
+docker-compose down
 
-docker run -d --name spring_redis_db_container -p 5432:5432 -v postgres_data:/var/lib/postgresql/data spring_redis_db
-
-docker run -d -p 6379:6379 --name redis_container redis
-
+### Redis monitor commands
 docker exec -it redis_container bash
+redis-cli -h localhost -p 6379 -> MONITOR

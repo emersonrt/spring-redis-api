@@ -1,10 +1,11 @@
-# Use the official PostgreSQL image from the Docker Hub
-FROM postgres:12
+# Cria o container de build
+FROM gradle:jdk17 AS build
+COPY --chown=gradle:gradle . /home/gradle/src
+WORKDIR /home/gradle/src
+RUN gradle build --no-daemon -x test
 
-# Set environment variables
-ENV POSTGRES_USER myuser
-ENV POSTGRES_PASSWORD mypassword
-ENV POSTGRES_DB spring_redis_db
-
-# Expose the PostgreSQL port
-EXPOSE 5432
+# Cria o container final
+FROM openjdk:17
+WORKDIR /usr/src/spring-redis-api
+COPY --from=build /home/gradle/src/build/libs/*.jar ./spring-redis-api.jar
+CMD ["java", "-jar", "-Dlogging.level.root=DEBUG", "-Dlogging.level.org.springframework=DEBUG", "spring-redis-api.jar"]
